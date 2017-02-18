@@ -1,28 +1,25 @@
 import asyncio
 import time
 
-async def register_callback(my_future, callback):
-  time.sleep(10)
-  my_future.add_done_callback(callback)
-
-
-async def write_to_s3(my_future):
-  raise Exception
+def write_to_s3():
+  time.sleep(5)
   print('wrote to s3')
-  my_future.set_result(None)
 
-
-def write_to_db(my_future):
+def write_to_db():
+  time.sleep(1)
   print('wrote to db')
 
 
-async def main():
-  s3_future = asyncio.Future()
-  db_future = asyncio.Future()
-  await write_to_s3(s3_future)
-  await register_callback(s3_future, write_to_db)
+async def main(loop):
+  print(1)
+  loop.call_soon(write_to_s3)
+  print(2)
+  loop.call_soon(write_to_db)
+  print(3)
 
 if __name__ == '__main__':
   event_loop = asyncio.get_event_loop()
-  event_loop.run_until_complete(main())
+  while True:
+    event_loop.run_until_complete(main(event_loop))
   event_loop.close()
+

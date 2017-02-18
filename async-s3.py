@@ -2,12 +2,11 @@ import asyncio
 import time
 
 async def register_callback(my_future, callback):
-  time.sleep(10)
+  # time.sleep(10)
   my_future.add_done_callback(callback)
 
 
 async def write_to_s3(my_future):
-  raise Exception
   print('wrote to s3')
   my_future.set_result(None)
 
