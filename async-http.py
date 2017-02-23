@@ -5,20 +5,21 @@ import requests
 
 
 async def make_request_async():
-  return await aiohttp.get('http://www.nytimes.com')
+  print('starting')
+  return aiohttp.get('http://python.org')
 
 
 async def make_request_sync():
-  return requests.get('http://www.nytimes.com')
+  return requests.get('http://python.org')
 
 
 async def main():
-  while True:
-    print(1)
-    await make_request_async()
-    # await make_request_sync()
-    print(2)
-
+  print(1)
+  task = asyncio.ensure_future(make_request_async())
+  # await make_request_sync()
+  print(2)
+  result = await task 
+  print(result)
 
 if __name__ == '__main__':
   event_loop = asyncio.get_event_loop()
